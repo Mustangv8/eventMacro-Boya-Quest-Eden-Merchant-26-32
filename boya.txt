@@ -292,3 +292,230 @@ macro falarComCoralPosPoporing {
                     # Retornar à macro de up
     release vaiPicky
 }
+
+                    # Iniciar Missão Boya Equips 2 lvl 44
+automacro iniciarMissaoBoya {
+    level == 44
+    run-once 1
+    call iniciarMissaoBoya2
+}
+
+macro iniciarMissaoBoya2 {                    
+
+                    # Usar Emblema do Éden
+    do use 22508
+    pause 3
+
+                    # Falar com a Instrutora Boya
+    do move moc_para01 23 35
+    pause 1
+    do talknpc 23 35 c
+    pause 1
+    do talk r0
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+                # Sair do Éden para Geffen (teleporte)
+    do move moc_para01 29 10
+    pause 2
+
+                    # Ir até Absalom na Vila dos Orcs
+    do move in_orcs01 38 174
+    pause 1
+    do conf lockMap in_orcs01
+    pause 1
+    do move in_orcs01 38 175
+    pause 1
+
+                     Conversa com Absalom (antes da caçada)
+    do talknpc 38 175 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+                    # Começar caçada de Orc Filhote
+    set $.orc baby = 0
+    do move gef_fild10
+    do conf attackAuto 1
+    do conf route_randomWalk 1
+    log Iniciando caçada de Orc Filhote...
+}
+
+automacro matouOrcFilhote {
+    monsterDead Baby Orc
+    run-once 0
+    call contarOrc Filhote
+}
+
+macro contarOrcFilhote {
+    set $.baby orc += 1
+    log [Baby Orc] Mortos: $.baby orc de 10
+    if ($.baby orc >= 10) call voltarAbsalomOrcFilhote
+}
+
+macro voltarAbsalomOrcFilhote {
+    log [Orc Filhote] Caçada completa! Voltando à Absalom.
+    do conf attackAuto 0
+    do conf route_randomWalk 0
+    do move in_orcs01 38 174
+    release falarComAbsalomPosOrcFilhote
+}
+
+macro falarComAbsalomPosOrcFilhote {
+    # Conversa com Absalom após Orc Filhote
+    do talknpc 38 175 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+     # Começar caçada de Orc Guerreiro
+    set $.orc warrior = 0
+    do move gef_fild10
+    do conf attackAuto 1
+    do conf route_randomWalk 1
+    log Iniciando caçada de Orc Guerreiro...
+
+}
+
+automacro matouOrcGuerreiro {
+    monsterDead Orc Warrior
+    run-once 0
+    call contarOrc Guerreiro
+}
+
+macro contarOrcGuerreiro {
+    set $.orc warrior += 1
+    log [Orc Warrior] Mortos: $.orc warrior de 10
+    if ($.orc warrior >= 10) call voltarAbsalomOrcGuerreiro
+}
+
+macro voltarAbsalomOrcFilhote {
+    log [Orc Guerreiro] Caçada completa! Voltando à Absalom.
+    do conf attackAuto 0
+    do conf route_randomWalk 0
+    do move in_orcs01 38 174
+    release falarComAbsalomPosOrcGuerreiro
+}
+macro falarComAbsalomPosOrcGuerreiro {
+    # Conversa com Absalom após Orc Guerreiro
+    do talknpc 38 175 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+     # Começar caçada de Senhora Orc
+    set $.orc lady = 0
+    do move gef_fild10
+    do conf attackAuto 1
+    do conf route_randomWalk 1
+    log Iniciando caçada de Senhora Orc...
+
+}
+
+automacro matouSenhoraOrc {
+    monsterDead Orc Lady
+    run-once 0
+    call contarOrc Lady
+}
+
+macro contarOrcLady {
+    set $.orc lady += 1
+    log [Orc Lady] Mortos: $.orc warrior de 10
+    if ($.orc lady >= 10) call voltarAbsalomOrcLady
+}
+
+macro voltarAbsalomOrcLady {
+    log [Orc Lady] Caçada completa! Voltando à Absalom.
+    do conf attackAuto 0
+    do conf route_randomWalk 0
+    do move in_orcs01 38 174
+    release falarComAbsalomPosOrcLady
+}
+
+macro falarComAbsalomPosLady {
+    # Conversa com Absalom após Orc Lady
+    do talknpc 38 175 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+                    # Usar Emblema do Éden
+    do use 22508
+    pause 3
+
+                    # Voltar à Instrutora Boya
+    do move moc_para01 23 35
+    pause 1
+    do talknpc 23 35 c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+                    # Falar com Administrador Mihael
+    do move moc_para01 110 83
+    pause 1
+    do talknpc 110 83 c
+    pause 1
+    do talk r0
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk r1
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 1
+    do talk c
+    pause 2
+
+                    # Equipar os itens do Éden
+    do eq 13051
+    pause 0.5
+    do eq 5583
+    pause 0.5
+    do eq 2560
+    pause 0.5
+    do eq 15011
+    pause 0.5
+    do eq 2458
+    pause 1
+
+                    # Retornar à macro de up
+ release vaiwolf
+}
